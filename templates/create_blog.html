@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog - MyBlog</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <section class="register-section">
+        <div class="register-card">
+
+            <h1>Create New Blog ✍️</h1>
+            <p class="register-subtitle">
+                Share your thoughts with the world.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('create_blog') }}">
+
+                <label for="title">Blog Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter your blog title"
+                    required
+                >
+
+                <label for="category">Category</label>
+                <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    placeholder="e.g. Technology, Lifestyle"
+                >
+
+                <label for="content">Blog Content</label>
+                <textarea
+                    id="content"
+                    name="content"
+                    rows="7"
+                    placeholder="Write your blog here..."
+                    required
+                ></textarea>
+
+                <button type="submit" class="register-btn">
+                    Publish Blog
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('dashboard') }}" class="back-home">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+    </section>
+
+</body>
+</html>

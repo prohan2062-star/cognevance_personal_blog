@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Blog - MyBlog</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <section class="register-section">
+
+        <div class="register-card">
+
+            <h1>Edit Your Blog ✏️</h1>
+
+            <p class="register-subtitle">
+                Update your blog details.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="POST"
+                  action="{{ url_for('edit_blog', blog_id=blog['id']) }}">
+
+                <label for="title">Blog Title</label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ blog['title'] }}"
+                    required
+                >
+
+                <label for="category">Category</label>
+
+                <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    value="{{ blog['category'] or '' }}"
+                    placeholder="Enter category"
+                >
+
+                <label for="content">Blog Content</label>
+
+                <textarea
+                    id="content"
+                    name="content"
+                    rows="8"
+                    required
+                >{{ blog['content'] }}</textarea>
+
+                <button type="submit" class="register-btn">
+                    Update Blog
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('dashboard') }}" class="back-home">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - MyBlog</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="{{ url_for('home') }}" class="brand">
+                My Personal Blog
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('home') }}#blogs">Blogs</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="register-section">
+
+        <div class="register-card">
+
+            <h1>Hello, {{ username }}! 👋</h1>
+
+            <p class="register-subtitle">
+                Welcome to your Personal Blog Dashboard.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+            <div class="alert {{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endwith %}
+
+            <h3 style="margin: 25px 0 15px;">
+                Your Account
+            </h3>
+
+            <p style="color: #64748b;">
+                You can now manage your blog posts.
+            </p>
+
+            <a href="{{ url_for('create_blog') }}" class="register-btn"
+                style="display:block;text-align:center;text-decoration:none;margin-top:20px;">
+                + Create New Blog
+            </a>
+
+            <hr style="margin:30px 0;border:0;border-top:1px solid #e2e8f0;">
+
+            <h2 style="margin-bottom:20px;">
+                My Published Blogs
+            </h2>
+
+            {% if blogs %}
+
+            {% for blog in blogs %}
+
+            <div style="text-align:left;padding:18px;margin-bottom:18px;border:1px solid #e2e8f0;border-radius:12px;">
+
+                <h3 style="color:#1e293b;margin-bottom:8px;">
+                    {{ blog['title'] }}
+                </h3>
+
+                <p style="color:#2563eb;font-size:14px;margin-bottom:10px;">
+                    {{ blog['category'] or 'General' }}
+                </p>
+
+                <p style="color:#64748b;line-height:1.6;white-space:pre-wrap;">
+                    {{ blog['content'] }}
+                </p>
+
+                <small style="color:#94a3b8;">
+                    Published: {{ blog['created_at'] }}
+                </small>
+
+
+                <div style="display:flex;gap:10px;margin-top:15px;">
+
+                    <a href="{{ url_for('edit_blog', blog_id=blog['id']) }}"
+                        style="background:#2563eb;color:white;padding:9px 18px;border-radius:6px;text-decoration:none;">
+                        Edit
+                    </a>
+
+                    <form method="POST" action="{{ url_for('delete_blog', blog_id=blog['id']) }}"
+                        onsubmit="return confirm('Are you sure you want to delete this blog?');">
+
+                        <button type="submit"
+                            style="background:#dc2626;color:white;padding:9px 18px;border:0;border-radius:6px;cursor:pointer;">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <p style="color:#64748b;margin:20px 0;">
+                You haven't published any blogs yet.
+                Create your first blog!
+            </p>
+
+            {% endif %}
+
+            <a href="/" class="register-btn"
+                style="display:block;text-align:center;text-decoration:none;margin-top:20px;">
+                Go to Homepage
+            </a>
+
+            <a href="/logout" class="back-home">
+                Logout
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

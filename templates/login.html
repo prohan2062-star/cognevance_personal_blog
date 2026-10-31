@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - MyBlog</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <section class="register-section">
+
+        <div class="register-card">
+
+            <h1>Welcome Back!</h1>
+
+            <p class="register-subtitle">
+                Login to continue to MyBlog.
+            </p>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('login') }}">
+
+                <label>Email Address</label>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit" class="register-btn">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="login-link">
+                Don't have an account?
+                <a href="/register">Register</a>
+            </p>
+
+            <a href="/" class="back-home">← Back to Home</a>
+
+        </div>
+
+    </section>
+
+</body>
+</html>

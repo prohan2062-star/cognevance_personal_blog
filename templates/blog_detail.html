@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ blog['title'] }} | Personal Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="{{ url_for('home') }}" class="brand">
+                My Personal Blog
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('home') }}#blogs">Blogs</a></li>
+
+                {% if session.get('user_id') %}
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="blog-detail">
+        <span>{{ blog['category'] or 'General' }}</span>
+
+        <h1>{{ blog['title'] }}</h1>
+
+        <p>Written by {{ blog['username'] }}</p>
+
+        <hr>
+
+        <div class="blog-full-content">
+            {{ blog['content'] }}
+        </div>
+
+        <br>
+        <a href="{{ url_for('home') }}">← Back to Home</a>
+    </main>
+
+</body>
+
+</html>
